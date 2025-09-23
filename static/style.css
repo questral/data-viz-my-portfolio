@@ -1,0 +1,161 @@
+html {
+    --accent: rgb(46, 46, 255);
+    
+    accent-color: var(--accent);
+    color-scheme: light dark;
+}
+
+body {
+    /* background: #000000;
+    color: wheat; */
+    background: Canvas;
+    color: Canvastext;
+    /* font-size: 20px; */
+    /* font: 100%/1.5 system-ui; */
+    font: 100%/1.5;
+    font-family: Arial, Helvetica, sans-serif;
+
+    max-width: 100ch;
+    margin-inline: max(2em, (100% - 100ch) / 2);
+
+}
+
+img {
+    max-width: 100%;
+}
+
+.projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+    column-gap: 1em;
+
+    article {
+        display: grid;
+        grid-template-rows: subgrid;
+        grid-row: span 3;
+    }
+
+    h2 {
+        margin-bottom: 0.5em;
+    }
+}
+
+label.color-scheme {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    font-family: inherit;
+    font-size: 80%;
+}
+
+nav {
+    --border-color: oklch(50% 90% 200 / 40%);
+    /* background: blue; */
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    /* border-bottom: 1px solid wheat; */
+    border-bottom: 1px solid var(--border-color);
+
+    ul {
+        display: contents;
+    }
+
+    li {
+        display: contents;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+        text-align: center;
+        padding: 0.5em;
+    }
+    a.current {
+        /* background: blue; */
+        border-bottom: 5px solid Canvastext;
+        padding-bottom: 0px;
+    }
+    a:hover {
+        border-bottom: 5px solid var(--accent);
+        padding-bottom: 0px;
+        /* background-color: oklch(from var(--accent) 10% 50% h); */
+        background-color: color-mix(in oklch, var(--accent), Canvas 85%);
+    }
+}
+
+input, textarea, button, select {
+    font: inherit;
+    /* display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin-block: 1em; */
+}
+
+h1 {
+    font-size: 4em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.1;
+    text-wrap: balance;
+}
+
+form {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1em;
+    
+    label {
+        display: grid;
+        grid-template-columns: subgrid;
+        grid-column: 1 / -1;
+    }
+    button {
+        grid-column: 1 / -1;
+    }
+}
+
+section {
+    display: grid;
+    /* grid-template-columns: auto 1fr; */
+    gap: 3em;
+
+    h2 {
+        grid-template-rows: subgrid;
+        grid-row: span 2;
+        margin: 0;
+        margin-bottom: 1em;
+    }
+
+    h3 {
+        margin: 0;
+    }
+
+    li {
+        
+        display: contents;
+    }
+
+    ul {
+        /* display: block; */
+        width: 100%;
+        margin-left: -25px;
+    }
+
+    .skills p {
+        /* background: blue; */
+        margin-bottom: 1em;
+    }
+
+    p {
+        /* line-height: 1; */
+        margin: 0;
+    }
+
+    time {
+        font-size: 0.7em;
+        font-style: italic;
+    }
+}
