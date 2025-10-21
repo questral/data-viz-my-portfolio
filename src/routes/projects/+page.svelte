@@ -8,19 +8,99 @@
     </ul>
 </nav> -->
 
+<script>
+    import projects from '$lib/projects.json';
+    import Project from "$lib/Project.svelte";
+    import Pie from '$lib/Pie.svelte';
+    import * as d3 from 'd3';
+
+    // let pieData = [
+    //     { value: 1, label: "apples" },
+    //     { value: 2, label: "oranges" },
+    //     { value: 3, label: "mangos" },
+    //     { value: 4, label: "pears" },
+    //     { value: 5, label: "limes" },
+    //     { value: 5, label: "cherries" }
+    // ];
+
+    let query = $state("");
+    // const filteredProjects = $derived(
+    //     projects.filter(project => {
+    //         if (query) {
+    //             return project.title.includes(query.toLowerCase());
+    //         }
+
+    //         return true;
+    //     })
+    // );
+    const filteredProjects = $derived(
+        projects.filter(project => {
+            let values = Object.values(project).join("\n").toLowerCase();
+            return values.includes(query.toLowerCase());
+        })
+    );
+
+    // let rolledData = d3.rollups(filteredProjects, v => v.length, d => d.year);
+    // let pieData = rolledData.map(([year, count]) => {
+    //     return { value: count, label: year };
+    // });
+    
+    const pieData = $derived.by(() => {
+        let rolledData = d3.rollups(filteredProjects, v => v.length, d => d.year);
+        return rolledData.map(([year, count]) => {
+            return { value: count, label: year };
+        });
+    });
+
+    // let rolledData = d3.rollups(filteredProjects, v => v.length, d => d.year);
+	// let pieData = rolledData.map(([year, count]) => {
+	// 	return { value: count, label: year };
+	// });
+
+    let selectedYearIndex = $state(-1);
+    const selectedYear = $derived(
+        selectedYearIndex > -1 ? pieData[selectedYearIndex].label : null
+    );
+    const filteredByYear = $derived(
+        filteredProjects.filter(project => {
+            if (selectedYear) {
+                return project.year === selectedYear;
+            }
+            return true;
+        })
+    );
+
+</script>
+<!-- <pre>{ JSON.stringify(projects, null, "\t") }</pre> -->
+
 <svelte:head>
 	<title>projects</title>
 </svelte:head>
 
-<h1>projects</h1>
+
+<!-- <Pie /> -->
+<Pie data={pieData} bind:selectedIndex={selectedYearIndex} />
+<!-- {selectedYear} -->
+
+<h1>{projects.length} projects</h1>
+
+<input type="search" bind:value={query}
+       aria-label="Search projects" placeholder="🔍 Search projects…" />
 
 <div class="projects">
-    <article>
-        <h2>Lorem ipsum dolor sit.</h2>
-        <img src="https:/dig.cmu.edu/datavis-fall-2024/labs/2/images/empty.svg" alt="">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic vitae eius cupiditate animi est veniam numquam aperiam quibusdam, sed dolorem impedit, aspernatur aliquam. Iusto quos expedita maiores blanditiis porro odit!</p>
-    </article>
-    <article>
+    <!-- {#each projects as p} -->
+    {#each filteredByYear as p}
+        <Project data={p} />
+        <!-- <article> -->
+            <!-- <h2>Lorem ipsum dolor sit.</h2> -->
+            <!-- <h2>{p.title}</h2> -->
+            <!-- <img src="https://dig.cmu.edu/datavis-fall-2024/labs/2/images/empty.svg" alt=""> -->
+            <!-- <img src={p.image} alt=""> -->
+            <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam dolor quos, quod assumenda explicabo odio, nobis ipsa laudantium quas eum veritatis ullam sint porro minima modi molestias doloribus cumque odit.</p> -->
+            <!-- <p>{p.description}</p> -->
+        <!-- </article> -->
+    {/each}
+    <!-- <article>
         <h2>Nulla quasi aliquid delectus.</h2>
         <img src="https:/dig.cmu.edu/datavis-fall-2024/labs/2/images/empty.svg" alt="">
         <p>Rem beatae eum accusamus. Quos eius fugit, quaerat aliquid tempore excepturi autem blanditiis neque, numquam consequuntur adipisci, asperiores facilis tenetur molestias dolor totam odit aut facere modi maxime. At, nostrum?</p>
@@ -74,5 +154,5 @@
         <h2>Sequi minima nihil quasi!</h2>
         <img src="https:/dig.cmu.edu/datavis-fall-2024/labs/2/images/empty.svg" alt="">
         <p>Quam eum fugiat ea expedita iste minima aliquam corporis quibusdam nemo dignissimos quae, sequi sunt ipsum, obcaecati beatae nulla iusto facilis at quisquam repellendus voluptate voluptas ipsam. Inventore, consequuntur odit!</p>
-    </article>
+    </article> -->
 </div>

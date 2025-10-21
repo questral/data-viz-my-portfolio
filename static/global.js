@@ -11,61 +11,62 @@ let currentLink = navLinks.find(a => a.host === location.host && a.pathname === 
 
 
 let pages = [
-	{url: ".", title: "home"},
-	{url: "projects", title: "projects"},
-    {url: "contacts", title: "contacts"},
-    {url: "resume", title: "resume"},
+	{url: "./", title: "home"},
+	{url: "projects/", title: "projects"},
+    {url: "contacts/", title: "contacts"},
+    {url: "resume/", title: "resume"},
     {url: "https://github.com/questral", title: "my git"},
 	// add the rest of your pages here
 ];
 
-let nav = document.createElement("nav");
-document.body.prepend(nav);
+// let nav = document.createElement("nav");
+// document.body.prepend(nav);
 
-// const ARE_WE_HOME = document.documentElement.classList.contains("home");
+// // const ARE_WE_HOME = document.documentElement.classList.contains("home");
 // for (let p of pages) {
 //     let url = p.url;
-// 	url = !ARE_WE_HOME && !url.startsWith("http") ? "../" + url : url;
+// 	// url = !ARE_WE_HOME && !url.startsWith("http") ? "../" + url : url;
 // 	let title = p.title;
-//     // Create link and add it to nav
-//     // nav.insertAdjacentHTML("beforeend", `<a href="${ url }">${ title }</a>` );
+//     // // Create link and add it to nav
+//     // // nav.insertAdjacentHTML("beforeend", `<a href="${ url }">${ title }</a>` );
 //     let a = document.createElement("a");
 //     a.href = url;
 //     a.textContent = title;
-//     if (a.host === location.host && a.pathname === location.pathname) {
-//         a.classList.add("current");
-//     }
-//     if (a.host !== location.host) {
-//         a.target = "_blank";
-//     }
+//     // if (a.host === location.host && a.pathname === location.pathname) {
+//     //     a.classList.add("current");
+//     // }
+//     // if (a.host !== location.host) {
+//     //     a.target = "_blank";
+//     // }
 
 //     nav.append(a);
 // }
 
 
-document.body.insertAdjacentHTML("afterbegin", `
-	<label class="color-scheme">
-		Theme:
-		<select>
-            <option value="light dark">Automatic (${matchMedia("(prefers-color-scheme: dark)").matches ? 'Dark' : 'Light'})</option>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-		</select>
-	</label>`
-);
+// document.body.insertAdjacentHTML("afterbegin", `
+// 	<label class="color-scheme">
+// 		Theme:
+// 		<select>
+//             <option value="light dark">Automatic (${matchMedia("(prefers-color-scheme: dark)").matches ? 'Dark' : 'Light'})</option>
+//             <option value="light">Light</option>
+//             <option value="dark">Dark</option>
+// 		</select>
+// 	</label>`
+// );
 
 // matchMedia("(prefers-color-scheme: dark)").matches
 
-let select = document.querySelector("label.color-scheme");
-select.addEventListener("input", function (event) {
-	console.log("color scheme changed to", event.target.value);
-    document.documentElement.style.setProperty("color-scheme", event.target.value);
-    localStorage.colorScheme = event.target.value;
-});
+// let select = document.querySelector("label.color-scheme");
+// select.addEventListener("input", function (event) {
+// 	console.log("color scheme changed to", event.target.value);
+//     document.documentElement.style.setProperty("color-scheme", event.target.value);
+//     localStorage.colorScheme = event.target.value;
+// });
 
-if ("colorScheme" in localStorage) {
-    document.documentElement.style.setProperty("color-scheme", localStorage.colorScheme);
-    select.value = localStorage.colorScheme;
-}
+// if ("colorScheme" in localStorage) {
+//     document.documentElement.style.setProperty("color-scheme", localStorage.colorScheme);
+//     select.value = localStorage.colorScheme;
+// }
 
 let form = document.querySelector("form");
+

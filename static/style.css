@@ -40,14 +40,14 @@ img {
     }
 }
 
-label.color-scheme {
+/* label.color-scheme {
     position: absolute;
     top: 1rem;
     right: 1rem;
 
     font-family: inherit;
     font-size: 80%;
-}
+} */
 
 nav {
     --border-color: oklch(50% 90% 200 / 40%);
