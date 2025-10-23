@@ -8,6 +8,8 @@
 		{url: "./contacts", title: "contacts"},
 		{url: "./resume", title: "resume"},
 		{url: "./meta", title: "meta"},
+		{url: "./a3-part1", title: "A3 (part 1)"},
+		{url: "./a3-part2", title: "A3 (part 2)"},
 		{url: "https://github.com/questral", title: "my git"},
 	];
 
