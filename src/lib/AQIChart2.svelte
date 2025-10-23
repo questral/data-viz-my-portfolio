@@ -18,7 +18,6 @@
 	const { data, showScatter }: { data: Item[], showScatter: boolean } = $props();
 
 	
-
 	// set the dimensions and margins of the graph
 	const margin = {top: 10, right: 10, bottom: 30, left: 30},
 		width = 850 - margin.left - margin.right,
@@ -82,7 +81,6 @@
 		let minRank = 0;
 		let maxRank = trimmedSelectedDots.length+1;
 
-		
 
 		const x2 = $derived(d3.scaleLinear()
 			.domain([minRank, maxRank])
@@ -101,13 +99,6 @@
 			.call(d3.axisLeft(y2)
 				.ticks(8));
 		
-		// svg2.append("rect")
-		// 	.attr("fill","red")
-		// 	.attr("opacity",0.3)
-		// 	.attr("x",0)
-		// 	.attr("y",0)
-		// 	.attr("width",w2)
-		// 	.attr("height",height);
 		
 		// const xGridLines = $derived(svg2.selectAll("xGrid")
 		// 	.data(x2.ticks(maxRank))
@@ -143,14 +134,11 @@
 				.style("fill", (c) => c.color)
 				.attr("stroke", "none")
 				.attr("x", 0)
-				// .attr("y", (c) => y(c.max ? c.max : height))
-				// .attr("y", (c) => Math.max(band((c.max ? c.max : maxAqi)), 0))
 				.attr("y", (c) => {
 					let maxVal = (c.max ? c.max : maxAqi);
 					return Math.max(band(maxVal), 0);
 				})
 				.attr("width", w2)
-				// .attr("height", (c) => Math.max(band(c.min - 1) - band(c.max ? c.max : maxAqi), 0))
 				.attr("height", (c) => {
 					let maxVal = (c.max ? c.max : 350);
 					let bandY = band(maxVal);
@@ -171,7 +159,6 @@
 			.style("background-color", "white")
 			.style("border", "solid")
 			.style("border-width", "1px")
-			// .style("border-radius", "5px")
 			.style("padding", "10px")
 			.style("position", "absolute")
 

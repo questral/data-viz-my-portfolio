@@ -74,6 +74,10 @@
 
 </script>
 
+<svelte:head>
+	<title>a3 part 1</title>
+</svelte:head>
+
 {#await data}
 	<!-- promise is pending -->
 	<p>loading data...</p>

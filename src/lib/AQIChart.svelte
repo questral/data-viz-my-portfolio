@@ -17,51 +17,6 @@
 	// properties this component accepts
 	const { data, showScatter }: { data: Item[], showScatter: boolean } = $props();
 
-	// just for debugging; can be removed
-	// $inspect(data);
-	// console.log(data);
-
-	// // set the dimensions and margins of the graph
-	// const margin = {top: 10, right: 30, bottom: 30, left: 60},
-	// 	width = 1000 - margin.left - margin.right,
-	// 	height = 400 - margin.top - margin.bottom;
-	
-	// const xScale = $derived(d3.scaleUtc()
-	// 	.domain([+d3.min(data, (d) => d.timestamp.getFullYear()),+d3.max(data, (d) => d.timestamp.getFullYear())])
-	// 	.range([0,width]));
-	
-	// const yScale = $derived(d3.scaleLinear()
-	// 	.domain([+d3.min(data, (d) => d.usAqi), +d3.max(data, (d) => d.usAqi)])
-	// 	.range([height,0]));
-	
-	// const line = $derived(d3
-	// 	.line()
-	// 	.x((d) => xScale(new Date(d.timestamp)))
-	// 	.y((d) => yScale(d.usAqi))
-	// );
-
-	// const linePath = $derived(line(data));
-
-	// // Create axis generators
-	// const xAxis = $derived(d3.axisBottom(xScale).ticks(width / 80).tickSizeOuter(10));
-  	// const yAxis = $derived(d3.axisLeft(yScale).ticks(height / 40));
-
-	// // Refs for axis elements
-	// let xAxisRef = $state();
-  	// let yAxisRef = $state();
-
-	// 	// Update axes when scales change
-	// $effect(() => {
-	// 	if (xAxisRef) {
-	// 	d3.select(xAxisRef).call(xAxis);
-	// 	}
-	// });
-	
-	// $effect(() => {
-	// 	if (yAxisRef) {
-	// 	d3.select(yAxisRef).call(yAxis);
-	// 	}
-	// });
 
 	// set the dimensions and margins of the graph
 	const margin = {top: 10, right: 30, bottom: 30, left: 60},
@@ -79,8 +34,6 @@
 	
 	//Read the data
 	function loadData() {
-		// https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/2_TwoNum.csv
-
 		// console.log(data);
 
 		svg.selectAll("circle").remove();
@@ -88,9 +41,6 @@
 		svg.selectAll("path").remove();
 
 		// Add X axis
-		// const x = d3.scaleLinear()
-		// .domain([0, 4000])
-		// .range([ 0, width ]);
 		let minDate = +d3.min(data, (d) => d.timestamp);
 		let maxDate = +d3.max(data, (d) => d.timestamp);
 		// console.log(minDate, maxDate);
@@ -102,9 +52,6 @@
 			.call(d3.axisBottom(x));
 
 		// Add Y axis
-		// const y = d3.scaleLinear()
-		// .domain([0, 500000])
-		// .range([height, 0]);
 		let minAqi = +d3.min(data, (d) => d.usAqi);
 		let maxAqi = +d3.max(data, (d) => d.usAqi) + 5;
 		// console.log(minAqi, maxAqi);
@@ -115,18 +62,7 @@
 			.call(d3.axisLeft(y)
 			.ticks(8));
 
-		// let monthGroups = d3.groups(data, (d) => d.timestamp.getMonth());
-		// console.log(monthGroups);
-		// let avgs = monthGroups.map(([month, lines]) => {
-		// 	let avgAqi = d3.mean(lines, line => line.usAqi);
-		// 	let ret = {
-		// 		month: month,
-		// 		avgAqi: avgAqi,
-		// 		timestamp: lines[0].timestamp
-		// 	}
-		// 	return ret;
-		// });
-		// console.log(avgs);
+		
 		let yearGroups = d3.groups(data, (d) => d.timestamp.getFullYear(), (d) => d.timestamp.getMonth());
 		// console.log(yearGroups);
 		let avgs = [];
@@ -184,14 +120,11 @@
 				.style("fill", (c) => c.color)
 				.attr("stroke", "none")
 				.attr("x", 0)
-				// .attr("y", (c) => y(c.max ? c.max : height))
-				// .attr("y", (c) => Math.max(band((c.max ? c.max : maxAqi)), 0))
 				.attr("y", (c) => {
 					let maxVal = (c.max ? c.max : maxAqi);
 					return Math.max(band(maxVal), 0);
 				})
 				.attr("width", width)
-				// .attr("height", (c) => Math.max(band(c.min - 1) - band(c.max ? c.max : maxAqi), 0))
 				.attr("height", (c) => {
 					let maxVal = (c.max ? c.max : 350);
 					let bandY = band(maxVal);
@@ -257,34 +190,6 @@
 <pre>
 <!-- {JSON.stringify(data[0], null, 2)} -->
 </pre>
-
-<!-- <svg id='plot'
-	{width}
-	{height}
-	viewBox="0 0 {width} {height}"
-	style:max-width="100%"
-	style:height="auto">
-
-	<g bind:this={yAxisRef} transform="translate({margin.left},0)"></g>
-	<g bind:this={xAxisRef} transform="translate(0,{height - margin.bottom})"></g>
-
-	<g transform="translate({margin.left},0)">
-		{#each yScale.ticks() as tick}
-		  {#if tick !== 0}
-			<line
-			  stroke="currentColor"
-			  stroke-opacity="0.1"
-			  x1={0}
-			  x2={width - margin.left - margin.right}
-			  y1={yScale(tick)}
-			  y2={yScale(tick)}
-			/>
-		  {/if}
-		{/each}
-	</g>
-
-  	<path fill="none" stroke="steelblue" stroke-width="1.5" d={linePath} />
-</svg> -->
 
 <div id="my_dataviz"></div>
 
